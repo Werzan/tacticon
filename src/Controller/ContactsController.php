@@ -19,7 +19,10 @@ class ContactsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users']
+            'contain' => ['Users'],
+            'conditions' => [
+                'Contacts.user_id' => $this->Auth->user('id'),
+            ]
         ];
         $contacts = $this->paginate($this->Contacts);
 
@@ -54,6 +57,9 @@ class ContactsController extends AppController
         $contact = $this->Contacts->newEntity();
         if ($this->request->is('post')) {
             $contact = $this->Contacts->patchEntity($contact, $this->request->data);
+
+            $contact->user_id = $this->Auth->user('id');
+
             if ($this->Contacts->save($contact)) {
                 $this->Flash->success(__('The contact has been saved.'));
 
@@ -82,6 +88,9 @@ class ContactsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $contact = $this->Contacts->patchEntity($contact, $this->request->data);
+
+            $contact->user_id = $this->Auth->user('id');
+
             if ($this->Contacts->save($contact)) {
                 $this->Flash->success(__('The contact has been saved.'));
 
@@ -115,4 +124,30 @@ class ContactsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->params['action'];
+
+        // The add and index actions are always allowed.
+        if (in_array($action, ['index', 'add'])) {
+            return true;
+        }
+        // All other actions require an id.
+        if (empty($this->request->params['pass'][0])) {
+            return false;
+        }
+
+        // Check that the bookmark belongs to the current user.
+        $id = $this->request->params['pass'][0];
+        $contact = $this->Contacts->get($id);
+        if ($contact->user_id === $user['id']) {
+            return true;
+        }
+        return parent::isAuthorized($user);
+    }
+
+
+
 }
