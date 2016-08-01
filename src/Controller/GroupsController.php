@@ -59,16 +59,6 @@ class GroupsController extends AppController
             $group = $this->Groups->patchEntity($group, $this->request->data, ['associated' => ['Contacts' => ['id']]]);
             $group->user_id = $this->Auth->user('id');
 
-            if (!empty($group->contacts)) {
-                foreach ($group->contacts as $contact) {
-                    $c = $this->Groups->Contacts->get($contact->id);
-                    if ($c->user_id !== $this->Auth->user('id')) {
-                        $this->Flash->error(__("You don't have permission to access that user"));
-                        return $this->redirect(['action' => 'index']);
-                    }
-                }
-            }
-
             if ($this->Groups->save($group)) {
                 $this->Flash->success(__('The group has been saved.'));
 
@@ -77,7 +67,7 @@ class GroupsController extends AppController
                 $this->Flash->error(__('The group could not be saved. Please, try again.'));
             }
         }
-        $contacts = $this->Groups->Contacts->find('list', ['limit' => 200]);
+        $contacts = $this->Groups->Contacts->find('list', ['limit' => 200])->where(['user_id' => $this->Auth->user('id')]);
         $this->set(compact('group', 'contacts'));
         $this->set('_serialize', ['group']);
     }
@@ -105,9 +95,8 @@ class GroupsController extends AppController
                 $this->Flash->error(__('The group could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Groups->Users->find('list', ['limit' => 200]);
-        $contacts = $this->Groups->Contacts->find('list', ['limit' => 200]);
-        $this->set(compact('group', 'users', 'contacts'));
+        $contacts = $this->Groups->Contacts->find('list', ['limit' => 200])->where(['user_id' => $this->Auth->user('id')]);
+        $this->set(compact('group', 'contacts'));
         $this->set('_serialize', ['group']);
     }
 

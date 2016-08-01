@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -77,6 +78,20 @@ class GroupsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+
+        $rules->add(function ($entity, $options) {
+            if (!empty($entity->contacts)) {
+                $badContacts = $this->Contacts->find()->where([
+                    'user_id IS NOT' => $entity->user_id,
+                    'id IN' => Hash::extract($entity->contacts, '{n}.id')
+                ])->count();
+
+                if ($badContacts) {
+                    return false;
+                }
+            }
+            return true;
+        }, 'AssociatedContactsbelongToSameUserAsGroup');
 
         return $rules;
     }

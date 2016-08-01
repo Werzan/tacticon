@@ -20,7 +20,6 @@
         <legend><?= __('Edit Group') ?></legend>
         <?php
             echo $this->Form->input('name');
-            echo $this->Form->input('user_id', ['options' => $users]);
             echo $this->Form->input('contacts._ids', ['options' => $contacts]);
         ?>
     </fieldset>
