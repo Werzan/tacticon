@@ -56,8 +56,7 @@ class ContactsController extends AppController
     {
         $contact = $this->Contacts->newEntity();
         if ($this->request->is('post')) {
-            $contact = $this->Contacts->patchEntity($contact, $this->request->data);
-
+            $contact = $this->Contacts->patchEntity($contact, $this->request->data, ['associated' => []]);
             $contact->user_id = $this->Auth->user('id');
 
             if ($this->Contacts->save($contact)) {
@@ -68,9 +67,8 @@ class ContactsController extends AppController
                 $this->Flash->error(__('The contact could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Contacts->Users->find('list', ['limit' => 200]);
         $groups = $this->Contacts->Groups->find('list', ['limit' => 200]);
-        $this->set(compact('contact', 'users', 'groups'));
+        $this->set(compact('contact', 'groups'));
         $this->set('_serialize', ['contact']);
     }
 
@@ -87,9 +85,7 @@ class ContactsController extends AppController
             'contain' => ['Groups']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $contact = $this->Contacts->patchEntity($contact, $this->request->data);
-
-            $contact->user_id = $this->Auth->user('id');
+            $contact = $this->Contacts->patchEntity($contact, $this->request->data, ['associated' => []]);
 
             if ($this->Contacts->save($contact)) {
                 $this->Flash->success(__('The contact has been saved.'));
@@ -139,7 +135,7 @@ class ContactsController extends AppController
             return false;
         }
 
-        // Check that the bookmark belongs to the current user.
+        // Check that the contact belongs to the current user.
         $id = $this->request->params['pass'][0];
         $contact = $this->Contacts->get($id);
         if ($contact->user_id === $user['id']) {

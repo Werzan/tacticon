@@ -19,7 +19,10 @@ class GroupsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users']
+            'contain' => ['Users'],
+            'conditions' => [
+                'Groups.user_id' => $this->Auth->user('id')
+            ]
         ];
         $groups = $this->paginate($this->Groups);
 
@@ -53,7 +56,19 @@ class GroupsController extends AppController
     {
         $group = $this->Groups->newEntity();
         if ($this->request->is('post')) {
-            $group = $this->Groups->patchEntity($group, $this->request->data);
+            $group = $this->Groups->patchEntity($group, $this->request->data, ['associated' => ['Contacts' => ['id']]]);
+            $group->user_id = $this->Auth->user('id');
+
+            if (!empty($group->contacts)) {
+                foreach ($group->contacts as $contact) {
+                    $c = $this->Groups->Contacts->get($contact->id);
+                    if ($c->user_id !== $this->Auth->user('id')) {
+                        $this->Flash->error(__("You don't have permission to access that user"));
+                        return $this->redirect(['action' => 'index']);
+                    }
+                }
+            }
+
             if ($this->Groups->save($group)) {
                 $this->Flash->success(__('The group has been saved.'));
 
@@ -62,9 +77,8 @@ class GroupsController extends AppController
                 $this->Flash->error(__('The group could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Groups->Users->find('list', ['limit' => 200]);
         $contacts = $this->Groups->Contacts->find('list', ['limit' => 200]);
-        $this->set(compact('group', 'users', 'contacts'));
+        $this->set(compact('group', 'contacts'));
         $this->set('_serialize', ['group']);
     }
 
@@ -82,6 +96,7 @@ class GroupsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $group = $this->Groups->patchEntity($group, $this->request->data);
+
             if ($this->Groups->save($group)) {
                 $this->Flash->success(__('The group has been saved.'));
 
@@ -115,4 +130,29 @@ class GroupsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->params['action'];
+
+        // The add and index actions are always allowed.
+        if (in_array($action, ['index', 'add'])) {
+            return true;
+        }
+        // All other actions require an id.
+        if (empty($this->request->params['pass'][0])) {
+            return false;
+        }
+
+        // Check that the group belongs to the current user.
+        $id = $this->request->params['pass'][0];
+        $group = $this->Groups->get($id);
+        if ($group->user_id === $user['id']) {
+            return true;
+        }
+        return parent::isAuthorized($user);
+    }
+
+
 }
