@@ -8,7 +8,7 @@ php:
 cache:
   bundler: true
   directories:
-- $HOME/.composer/cache
+    - $HOME/.composer/cache
 
 before_script:
   - composer self-update
@@ -23,7 +23,7 @@ before_install:
   - pip install --user codecov
 
 after_success:
-- codecov -t b9d29c12-a9bc-4843-9e7e-be795af2b394
+  - codecov -t b9d29c12-a9bc-4843-9e7e-be795af2b394
 
 notifications:
   email: false
