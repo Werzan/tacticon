@@ -66,8 +66,7 @@ class ContactsTable extends Table
 
         $validator
             ->email('email')
-            ->allowEmpty('email')
-            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->allowEmpty('email');
 
         $validator
             ->allowEmpty('tel');
@@ -84,7 +83,6 @@ class ContactsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;

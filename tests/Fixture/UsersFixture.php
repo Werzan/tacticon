@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\Fixture;
 
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**

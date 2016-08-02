@@ -5,12 +5,25 @@ sudo: false
 php:
   - 7.0
 
+cache:
+  bundler: true
+  directories:
+    - $HOME/.composer/cache
+
 before_script:
-  - sh -c "composer require 'cakephp/cakephp-codesniffer:dev-master'"
+  - composer self-update
+  - composer install --no-interaction
   - phpenv rehash
 
 script:
-  - sh -c "vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests ./config ./webroot"
+  - sh -c "vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP --warning-severity=0 ./src ./tests ./webroot"
+  - sh -c "vendor/bin/phpunit --coverage-clover=coverage.xml"
+
+before_install:
+  - pip install --user codecov
+
+after_success:
+  - codecov -t b9d29c12-a9bc-4843-9e7e-be795af2b394
 
 notifications:
   email: false

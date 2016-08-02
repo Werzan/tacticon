@@ -120,7 +120,12 @@ class GroupsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-
+    /**
+     * Returns whether a user is authorized or not
+     *
+     * @param \App\Model\Entity\User $user logged in user
+     * @return bool user is authorized or not
+     */
     public function isAuthorized($user)
     {
         $action = $this->request->params['action'];
@@ -140,8 +145,7 @@ class GroupsController extends AppController
         if ($group->user_id === $user['id']) {
             return true;
         }
+
         return parent::isAuthorized($user);
     }
-
-
 }

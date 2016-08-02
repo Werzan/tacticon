@@ -90,6 +90,7 @@ class GroupsTable extends Table
                     return false;
                 }
             }
+
             return true;
         }, 'AssociatedContactsbelongToSameUserAsGroup');
 

@@ -83,10 +83,15 @@ class AppController extends Controller
     }
 
 
-
+    /**
+     * Returns whether a user is authorized or not
+     * Default action is false
+     *
+     * @param \App\Model\Entity\User $user logged in user
+     * @return bool user is authorized or not
+     */
     public function isAuthorized($user)
     {
         return false;
     }
-
 }

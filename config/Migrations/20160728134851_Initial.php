@@ -72,12 +72,6 @@ class Initial extends AbstractMigration
             ])
             ->addIndex(
                 [
-                    'email',
-                ],
-                ['unique' => true]
-            )
-            ->addIndex(
-                [
                     'user_id',
                 ]
             )
