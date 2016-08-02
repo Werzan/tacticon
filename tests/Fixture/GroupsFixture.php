@@ -42,8 +42,18 @@ class GroupsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet',
+            'name' => 'csoporta',
             'user_id' => 1
+        ],
+        [
+            'id' => 2,
+            'name' => 'csoportb',
+            'user_id' => 1
+        ],
+        [
+            'id' => 3,
+            'name' => 'csoportc',
+            'user_id' => 2
         ],
     ];
 }

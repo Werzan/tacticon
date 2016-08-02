@@ -45,10 +45,45 @@ class ContactsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet',
-            'email' => 'Lorem ipsum dolor sit amet',
-            'tel' => 'Lorem ipsum dolor sit amet',
+            'name' => 'Tóth Lajos',
+            'email' => 'lajos@gmail.com',
+            'tel' => '',
             'user_id' => 1
+        ],
+        [
+            'id' => 2,
+            'name' => 'Kiss Béla',
+            'email' => 'bela@gmail.com',
+            'tel' => '',
+            'user_id' => 1
+        ],
+        [
+            'id' => 3,
+            'name' => 'Lakatos Nintendó',
+            'email' => 'nintendo@gmail.com',
+            'tel' => '',
+            'user_id' => 1
+        ],
+        [
+            'id' => 4,
+            'name' => 'Kolompár Géza',
+            'email' => 'kolompar@freemail.hu',
+            'tel' => '',
+            'user_id' => 2
+        ],
+        [
+            'id' => 5,
+            'name' => 'Tóth Arnold',
+            'email' => 'arnold@freemail.hu',
+            'tel' => '',
+            'user_id' => 2
+        ],
+        [
+            'id' => 6,
+            'name' => 'Olajos Gizella',
+            'email' => 'gizella@freemail.hu',
+            'tel' => '',
+            'user_id' => 2
         ],
     ];
 }
