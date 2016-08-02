@@ -18,9 +18,12 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $users = $this->paginate($this->Users);
+        $query = $this->Users->find();
 
-        $this->set(compact('users'));
+        $users = $this->paginate($query);
+
+        $authUserId = $this->Auth->user('id');
+        $this->set(compact('users', 'authUserId'));
         $this->set('_serialize', ['users']);
     }
 
@@ -59,7 +62,8 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('user'));
+        $authUser = $this->Auth->user();
+        $this->set(compact('user', 'authUser'));
         $this->set('_serialize', ['user']);
     }
 
@@ -145,5 +149,32 @@ class UsersController extends AppController
         $this->Flash->success('You are now logged out.');
 
         return $this->redirect($this->Auth->logout());
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user logged in user
+     * @return bool user is authorized or not
+     */
+    public function isAuthorized($user)
+    {
+        $action = $this->request->params['action'];
+
+        // The add and index actions are always allowed.
+        if (in_array($action, ['index', 'add'])) {
+            return true;
+        }
+        // All other actions require an id.
+        if (empty($this->request->params['pass'][0])) {
+            return false;
+        }
+
+        // Check that the contact belongs to the current user.
+        $id = $this->request->params['pass'][0];
+        $contact = $this->Contacts->get($id);
+        if ($contact->user_id === $user['id']) {
+            return true;
+        }
+
+        return parent::isAuthorized($user);
     }
 }
