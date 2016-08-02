@@ -12,3 +12,7 @@
 
 Read and edit `config/app.php` and setup the 'Datasources' and any other
 configuration relevant for your application.
+
+## My unit tests:
+
+[![codecov](https://codecov.io/gh/Werzan/tacticon/pull/13/graphs/sunburst.svg)](https://codecov.io/gh/Werzan/tacticon)
