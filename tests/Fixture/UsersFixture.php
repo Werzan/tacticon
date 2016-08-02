@@ -32,17 +32,28 @@ class UsersFixture extends TestFixture
     ];
     // @codingStandardsIgnoreEnd
 
-    /**
-     * Records
-     *
-     * @var array
-     */
-    public $records = [
-        [
-            'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet',
-            'email' => 'Lorem ipsum dolor sit amet',
-            'password' => 'Lorem ipsum dolor sit amet'
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'id' => 1,
+                'name' => 'Petike',
+                'email' => 'peti@gmail.com',
+                'password' => (new DefaultPasswordHasher)->hash('qwert'),
+            ],
+            [
+                'id' => 2,
+                'name' => 'Juliska',
+                'email' => 'juli@gmail.com',
+                'password' => (new DefaultPasswordHasher)->hash('abcde'),
+            ],
+            [
+                'id' => 3,
+                'name' => 'Géza',
+                'email' => 'geza@freemail.hu',
+                'password' => (new DefaultPasswordHasher)->hash('abcde'),
+            ],
+        ];
+        parent::init();
+    }
 }
