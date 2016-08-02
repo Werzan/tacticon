@@ -16,11 +16,30 @@ class ContactsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.contacts',
         'app.users',
+        'app.contacts',
         'app.groups',
         'app.contacts_groups'
     ];
+
+    /**
+     * setUp method
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        // Set session data
+        $this->session([
+            'Auth' => [
+                'User' => [
+                    'id' => '1',
+                    'email' => 'peti@gmail.com',
+                ]
+            ]
+        ]);
+    }
 
     /**
      * Test index method
@@ -29,7 +48,11 @@ class ContactsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/contacts');
+        $this->assertResponseOk();
+
+        $this->get('/contacts/index');
+        $this->assertResponseOk();
     }
 
     /**
@@ -39,7 +62,11 @@ class ContactsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/contacts/view/1');
+        $this->assertResponseCode(302);
+
+        $this->get('/contacts/view/2');
+        $this->assertResponseCode(302);
     }
 
     /**
@@ -49,7 +76,9 @@ class ContactsControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/contacts/add');
+        $this->assertResponseOk();
+
     }
 
     /**
