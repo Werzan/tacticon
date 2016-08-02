@@ -55,32 +55,17 @@ class GroupsTableTest extends TestCase
     }
 
     /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
-    public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test buildRules method
      *
      * @return void
      */
     public function testBuildRules()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $group = $this->Groups->get(1);
+        $user = $this->Groups->Contacts->get(4);
+        $group->contacts = [$user];
+        $result = $this->Groups->save($group);
+
+        $this->assertFalse($result);
     }
 }
