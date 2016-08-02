@@ -68,6 +68,6 @@ class ContactsTableTest extends TestCase
 
         $result = $this->Contacts->save($contact);
 
-        $this->assertTrue($result);
+        $this->assertNotFalse($result);
     }
 }

@@ -262,7 +262,8 @@ return [
          */
         'test' => [
             'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Mysql',
+            'driver' => 'Cake\Database\Driver\Sqlite',
+            /*
             'persistent' => false,
             'host' => 'localhost',
             //'port' => 'non_standard_port_number',
@@ -276,6 +277,7 @@ return [
             'log' => false,
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
             'url' => env('DATABASE_TEST_URL', null),
+            */
         ],
     ],
 
