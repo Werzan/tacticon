@@ -18,9 +18,12 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $users = $this->paginate($this->Users);
+        $query = $this->Users->find();
 
-        $this->set(compact('users'));
+        $users = $this->paginate($query);
+
+        $authUserId = $this->Auth->user('id');
+        $this->set(compact('users', 'authUserId'));
         $this->set('_serialize', ['users']);
     }
 
@@ -59,7 +62,8 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('user'));
+        $authUser = $this->Auth->user();
+        $this->set(compact('user', 'authUser'));
         $this->set('_serialize', ['user']);
     }
 
@@ -145,5 +149,28 @@ class UsersController extends AppController
         $this->Flash->success('You are now logged out.');
 
         return $this->redirect($this->Auth->logout());
+    }
+
+    /**
+     * @param array $user logged in user
+     * @return bool user is authorized or not
+     */
+    public function isAuthorized($user)
+    {
+        $action = $this->request->params['action'];
+
+        // The index action is always allowed.
+        if (in_array($action, ['index'])) {
+            return true;
+        }
+        // All other actions require an id.
+        if (empty($this->request->params['pass'][0])) {
+            return false;
+        }
+
+        // Check that the user is the logged in user
+        $id = $this->request->params['pass'][0];
+
+        return $id === $user['id'];
     }
 }

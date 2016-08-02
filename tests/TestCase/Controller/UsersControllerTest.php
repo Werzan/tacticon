@@ -18,8 +18,28 @@ class UsersControllerTest extends IntegrationTestCase
     public $fixtures = [
         'app.users',
         'app.contacts',
-        'app.groups'
+        'app.groups',
+        'app.contacts_groups'
     ];
+
+    /**
+     * setUp method
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        // Set session data
+        $this->session([
+            'Auth' => [
+                'User' => [
+                    'id' => '1',
+                    'email' => 'peti@gmail.com',
+                ]
+            ]
+        ]);
+    }
 
     /**
      * Test index method
@@ -28,7 +48,11 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/users');
+        $this->assertResponseOk();
+
+        $this->get('/users/index');
+        $this->assertResponseOk();
     }
 
     /**
@@ -38,7 +62,11 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/users/view/1');
+        $this->assertResponseOk();
+
+        $this->get('/users/view/2');
+        $this->assertResponseCode(302);
     }
 
     /**
@@ -48,7 +76,17 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/users/add');
+        $this->assertResponseOk();
+
+        $data = [
+            'name' => 'random újgyerek',
+            'email' => 'ujonc@gmail.com',
+            'password' => 'trololo',
+        ];
+
+        $this->post('/users/add', $data);
+        $this->assertResponseCode('302');
     }
 
     /**
@@ -58,7 +96,25 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/users/edit/1');
+        $this->assertResponseOk();
+
+        $data = [
+            'name' => 'Peti jancsi lett'
+        ];
+
+        $this->post('/users/edit/1', $data);
+        $this->assertResponseCode(302);
+
+        $this->get('/users/edit/2');
+        $this->assertResponseCode(302);
+
+        $data = [
+            'name' => 'Peti jancsi lett'
+        ];
+
+        $this->post('/users/edit/2', $data);
+        $this->assertResponseCode(302);
     }
 
     /**
@@ -68,6 +124,10 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->post('/users/delete/1');
+        $this->assertResponseCode(302);
+
+        $this->post('/users/delete/2');
+        $this->assertResponseCode(302);
     }
 }
