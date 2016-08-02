@@ -143,7 +143,4 @@ class ContactsController extends AppController
         }
         return parent::isAuthorized($user);
     }
-
-
-
 }

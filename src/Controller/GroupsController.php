@@ -142,6 +142,4 @@ class GroupsController extends AppController
         }
         return parent::isAuthorized($user);
     }
-
-
 }
