@@ -122,7 +122,7 @@ class ContactsController extends AppController
     }
 
     /**
-     * @param \App\Model\Entity\User $user logged in user
+     * @param array $user logged in user
      * @return bool user is authorized or not
      */
     public function isAuthorized($user)

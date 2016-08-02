@@ -66,7 +66,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
 
         $this->get('/users/view/2');
-        $this->assertResponseError();
+        $this->assertResponseCode(302);
     }
 
     /**
@@ -86,7 +86,7 @@ class UsersControllerTest extends IntegrationTestCase
         ];
 
         $this->post('/users/add', $data);
-        $this->assertResponseOk();
+        $this->assertResponseCode('302');
     }
 
     /**
@@ -104,17 +104,17 @@ class UsersControllerTest extends IntegrationTestCase
         ];
 
         $this->post('/users/edit/1', $data);
-        $this->assertResponseOk();
+        $this->assertResponseCode(302);
 
         $this->get('/users/edit/2');
-        $this->assertResponseError();
+        $this->assertResponseCode(302);
 
         $data = [
             'name' => 'Peti jancsi lett'
         ];
 
         $this->post('/users/edit/2', $data);
-        $this->assertResponseError();
+        $this->assertResponseCode(302);
     }
 
     /**
@@ -124,13 +124,10 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->get('/users/delete/1');
-        $this->assertResponseError();
-
         $this->post('/users/delete/1');
-        $this->assertResponseOk();
+        $this->assertResponseCode(302);
 
         $this->post('/users/delete/2');
-        $this->assertResponseError();
+        $this->assertResponseCode(302);
     }
 }

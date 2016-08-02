@@ -152,15 +152,15 @@ class UsersController extends AppController
     }
 
     /**
-     * @param \App\Model\Entity\User $user logged in user
+     * @param array $user logged in user
      * @return bool user is authorized or not
      */
     public function isAuthorized($user)
     {
         $action = $this->request->params['action'];
 
-        // The add and index actions are always allowed.
-        if (in_array($action, ['index', 'add'])) {
+        // The index action is always allowed.
+        if (in_array($action, ['index'])) {
             return true;
         }
         // All other actions require an id.
@@ -168,13 +168,9 @@ class UsersController extends AppController
             return false;
         }
 
-        // Check that the contact belongs to the current user.
+        // Check that the user is the logged in user
         $id = $this->request->params['pass'][0];
-        $contact = $this->Contacts->get($id);
-        if ($contact->user_id === $user['id']) {
-            return true;
-        }
 
-        return parent::isAuthorized($user);
+        return $id === $user['id'];
     }
 }
