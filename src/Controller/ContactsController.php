@@ -86,7 +86,6 @@ class ContactsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $contact = $this->Contacts->patchEntity($contact, $this->request->data, ['associated' => []]);
-
             if ($this->Contacts->save($contact)) {
                 $this->Flash->success(__('The contact has been saved.'));
 
@@ -141,7 +140,7 @@ class ContactsController extends AppController
         // Check that the contact belongs to the current user.
         $id = $this->request->params['pass'][0];
         $contact = $this->Contacts->get($id);
-        if ($contact->user_id === $user['id']) {
+        if ($contact->user_id == $user['id']) {
             return true;
         }
 
