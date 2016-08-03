@@ -56,7 +56,7 @@ class ContactsController extends AppController
     {
         $contact = $this->Contacts->newEntity();
         if ($this->request->is('post')) {
-            $contact = $this->Contacts->patchEntity($contact, $this->request->data, ['associated' => []]);
+            $contact = $this->Contacts->patchEntity($contact, $this->request->data, ['associated' => ['Groups' => ['id']]]);
             $contact->user_id = $this->Auth->user('id');
 
             if ($this->Contacts->save($contact)) {
@@ -67,8 +67,9 @@ class ContactsController extends AppController
                 $this->Flash->error(__('The contact could not be saved. Please, try again.'));
             }
         }
+        $users = $this->Contacts->Users->find('list', ['limit' => 200]);
         $groups = $this->Contacts->Groups->find('list', ['limit' => 200]);
-        $this->set(compact('contact', 'groups'));
+        $this->set(compact('contact', 'groups', 'users'));
         $this->set('_serialize', ['contact']);
     }
 
@@ -85,7 +86,7 @@ class ContactsController extends AppController
             'contain' => ['Groups']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $contact = $this->Contacts->patchEntity($contact, $this->request->data, ['associated' => []]);
+            $contact = $this->Contacts->patchEntity($contact, $this->request->data, ['associated' => ['Groups' => ['id']]]);
             if ($this->Contacts->save($contact)) {
                 $this->Flash->success(__('The contact has been saved.'));
 
