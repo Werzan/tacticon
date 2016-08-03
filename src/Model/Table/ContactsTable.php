@@ -100,6 +100,7 @@ class ContactsTable extends Table
 
             return true;
         }, '');
+
         return $rules;
     }
 }
