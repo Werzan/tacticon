@@ -56,7 +56,7 @@ class ContactsController extends AppController
     {
         $contact = $this->Contacts->newEntity();
         if ($this->request->is('post')) {
-            $contact = $this->Contacts->patchEntity($contact, $this->request->data, ['associated' => ['Groups' => ['id']]]);
+            $contact = $this->Contacts->patchEntity($contact, $this->request->data);
             $contact->user_id = $this->Auth->user('id');
 
             if ($this->Contacts->save($contact)) {
@@ -68,7 +68,7 @@ class ContactsController extends AppController
             }
         }
         $users = $this->Contacts->Users->find('list', ['limit' => 200]);
-        $groups = $this->Contacts->Groups->find('list', ['limit' => 200]);
+        $groups = $this->Contacts->Groups->find('list', ['limit' => 200])->where(['user_id' => $this->Auth->user('id')]);
         $this->set(compact('contact', 'groups', 'users'));
         $this->set('_serialize', ['contact']);
     }
@@ -96,7 +96,7 @@ class ContactsController extends AppController
             }
         }
         $users = $this->Contacts->Users->find('list', ['limit' => 200]);
-        $groups = $this->Contacts->Groups->find('list', ['limit' => 200]);
+        $groups = $this->Contacts->Groups->find('list', ['limit' => 200])->where(['user_id' => $this->Auth->user('id')]);
         $this->set(compact('contact', 'users', 'groups'));
         $this->set('_serialize', ['contact']);
     }

@@ -56,7 +56,7 @@ class GroupsController extends AppController
     {
         $group = $this->Groups->newEntity();
         if ($this->request->is('post')) {
-            $group = $this->Groups->patchEntity($group, $this->request->data, ['associated' => ['Contacts' => ['id']]]);
+            $group = $this->Groups->patchEntity($group, $this->request->data);
             $group->user_id = $this->Auth->user('id');
 
             if ($this->Groups->save($group)) {
