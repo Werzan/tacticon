@@ -103,7 +103,6 @@ class ContactsControllerTest extends IntegrationTestCase
         ];
         $this->post('/contacts/edit/1', $data);
         $this->assertResponseCode('302');
-
     }
 
     /**
