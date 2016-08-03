@@ -142,7 +142,7 @@ class GroupsController extends AppController
         // Check that the group belongs to the current user.
         $id = $this->request->params['pass'][0];
         $group = $this->Groups->get($id);
-        if ($group->user_id === $user['id']) {
+        if ($group->user_id == $user['id']) {
             return true;
         }
 

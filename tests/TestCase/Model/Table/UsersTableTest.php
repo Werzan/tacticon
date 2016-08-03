@@ -66,7 +66,6 @@ class UsersTableTest extends TestCase
             'password' => 'aaaaa',
         ]);
         $result = $this->Users->save($newUser);
-
         $this->assertFalse($result);
     }
 }

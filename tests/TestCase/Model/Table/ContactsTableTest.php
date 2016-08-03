@@ -61,13 +61,12 @@ class ContactsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $contact = $this->Contacts->newEntity();
+        $contact = $this->Contacts->newEntity([
+            'name' => 'Hedvig',
+            'email' => 'kolompar@freemail.hu',
+        ]);
         $contact->user_id = 1;
-        $contact->email = 'kolompar@freemail.hu';
-        $contact->name = 'Hedvig';
-
         $result = $this->Contacts->save($contact);
-
         $this->assertNotFalse($result);
     }
 }

@@ -63,10 +63,10 @@ class ContactsControllerTest extends IntegrationTestCase
     public function testView()
     {
         $this->get('/contacts/view/1');
-        $this->assertResponseCode(302);
+        $this->assertResponseOk();
 
         $this->get('/contacts/view/2');
-        $this->assertResponseCode(302);
+        $this->assertResponseOk();
     }
 
     /**
@@ -79,6 +79,13 @@ class ContactsControllerTest extends IntegrationTestCase
         $this->get('/contacts/add');
         $this->assertResponseOk();
 
+        $data = [
+            'name' => 'Petikeaddoltspanja',
+            'email' => 'addoltspan@gmail.com',
+        ];
+
+        $this->post('/contacts/add', $data);
+        $this->assertResponseCode('302');
     }
 
     /**
@@ -88,7 +95,15 @@ class ContactsControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/contacts/edit/1');
+        $this->assertResponseOk();
+
+        $data = [
+            'name' => 'Módosított Benjamin'
+        ];
+        $this->post('/contacts/edit/1', $data);
+        $this->assertResponseCode('302');
+
     }
 
     /**
@@ -98,6 +113,10 @@ class ContactsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->post('/contacts/delete/1');
+        $this->assertResponseCode(302);
+
+        $this->post('/contacts/delete/2');
+        $this->assertResponseCode(302);
     }
 }

@@ -22,6 +22,20 @@ class GroupsControllerTest extends IntegrationTestCase
         'app.contacts_groups'
     ];
 
+    public function setUp()
+    {
+        parent::setUp();
+        // Set session data
+        $this->session([
+            'Auth' => [
+                'User' => [
+                    'id' => '1',
+                    'email' => 'peti@gmail.com',
+                ]
+            ]
+        ]);
+    }
+
     /**
      * Test index method
      *
@@ -29,7 +43,11 @@ class GroupsControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/groups');
+        $this->assertResponseOk();
+
+        $this->get('/groups/index');
+        $this->assertResponseOk();
     }
 
     /**
@@ -39,7 +57,11 @@ class GroupsControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/groups/view/1');
+        $this->assertResponseOk();
+
+        $this->get('/groups/view/3');
+        $this->assertResponseCode('302');
     }
 
     /**
@@ -49,7 +71,15 @@ class GroupsControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/groups/add');
+        $this->assertResponseOk();
+
+        $data = [
+            'name' => 'csoportd',
+            'user_id' => 1,
+        ];
+        $this->post('/groups/add', $data);
+        $this->assertResponseCode('302');
     }
 
     /**
@@ -59,7 +89,15 @@ class GroupsControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/groups/edit/1');
+        $this->assertResponseOk();
+
+        $data = [
+            'name' => 'csoport_rename'
+        ];
+
+        $this->post('/groups/edit/1', $data);
+        $this->assertResponseCode(302);
     }
 
     /**
@@ -69,6 +107,10 @@ class GroupsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->post('/groups/delete/1');
+        $this->assertResponseCode('302');
+
+        $this->post('/groups/delete/4');
+        $this->assertResponseCode('404');
     }
 }

@@ -62,8 +62,10 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $authUser = $this->Auth->user();
-        $this->set(compact('user', 'authUser'));
+
+
+        // $authUser = $this->Auth->user();
+        $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
 
@@ -89,6 +91,7 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
+
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
@@ -171,6 +174,6 @@ class UsersController extends AppController
         // Check that the user is the logged in user
         $id = $this->request->params['pass'][0];
 
-        return $id === $user['id'];
+        return $id == $user['id'];
     }
 }
