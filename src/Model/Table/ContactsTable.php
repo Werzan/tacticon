@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -84,6 +85,21 @@ class ContactsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+
+        $rules->add(function ($entity, $options) {
+            if (!empty($entity->groups)) {
+                $badGroups = $this->Groups->find()->where([
+                    'user_id IS NOT' => $entity->user_id,
+                    'id IN' => Hash::extract($entity->groups, '{n}.id')
+                ])->count();
+
+                if ($badGroups) {
+                    return false;
+                }
+            }
+
+            return true;
+        }, '');
 
         return $rules;
     }
