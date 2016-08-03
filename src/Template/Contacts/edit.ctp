@@ -22,7 +22,7 @@
             echo $this->Form->input('name');
             echo $this->Form->input('email');
             echo $this->Form->input('tel');
-            echo $this->Form->input('user_id', ['options' => $users]);
+            //echo $this->Form->input('user_id', ['options' => $users]);
             echo $this->Form->input('groups._ids', ['options' => $groups]);
         ?>
     </fieldset>
