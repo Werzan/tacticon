@@ -46,4 +46,14 @@
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
+
+
+
+     <?= $this->Form->create(); ?>
+        <?= $this->Form->button(__("Logout")); ?>
+        <form method="post" action="/Users/logout">
+        <input type="hidden" name="logoutbtn" value="logoutvalue" />
+        <?= $this->Form->end(); ?>
+
+
 </div>
