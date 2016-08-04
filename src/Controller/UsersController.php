@@ -20,6 +20,10 @@ class UsersController extends AppController
     {
         $query = $this->Users->find();
 
+        if ($this->request->data('search')) {
+            $query->where(['Users.name LIKE' => '%' . $this->request->data('search') . '%']);
+        }
+
         $users = $this->paginate($query);
 
         $authUserId = $this->Auth->user('id');
