@@ -24,7 +24,15 @@ class ContactsController extends AppController
                 'Contacts.user_id' => $this->Auth->user('id'),
             ]
         ];
-        $contacts = $this->paginate($this->Contacts);
+
+        $query = $this->Contacts->find();
+        if ($this->request->data('search')) {
+            $query
+                ->where([
+                    'Contacts.name LIKE' => "%" . $this->request->data('search') . "%"
+                ]);
+        }
+        $contacts = $this->paginate($query);
 
         $this->set(compact('contacts'));
         $this->set('_serialize', ['contacts']);
