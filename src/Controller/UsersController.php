@@ -28,6 +28,10 @@ class UsersController extends AppController
         $authUserId = $this->Auth->user('id');
         $this->set(compact('users', 'authUserId'));
         $this->set('_serialize', ['users']);
+
+        if ($this->request->data('logoutbtn')) {
+            $this->logout();
+        }
     }
 
     /**
