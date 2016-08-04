@@ -10,6 +10,12 @@
 </nav>
 <div class="contacts index large-9 medium-8 columns content">
     <h3><?= __('Contacts') ?></h3>
+
+    <?= $this->Form->create(); ?>
+    <?= $this->Form->input('search'); ?>
+    <?= $this->Form->button(__("Search")); ?>
+    <?= $this->Form->end(); ?>
+
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
