@@ -32,24 +32,27 @@
         </tr>
     </table>
     <div class="related">
+
+
+
         <h4><?= __('Related Contacts') ?></h4>
         <?php if (!empty($user->contacts)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th><?= __('Id') ?></th>
+             <!--   <th><?= __('Id') ?></th> -->
                 <th><?= __('Name') ?></th>
                 <th><?= __('Email') ?></th>
                 <th><?= __('Tel') ?></th>
-                <th><?= __('User Id') ?></th>
+             <!--  <th><?= __('User Id') ?></th> -->
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($user->contacts as $contacts): ?>
             <tr>
-                <td><?= h($contacts->id) ?></td>
+             <!--   <td><?= h($contacts->id) ?></td> -->
                 <td><?= h($contacts->name) ?></td>
                 <td><?= h($contacts->email) ?></td>
                 <td><?= h($contacts->tel) ?></td>
-                <td><?= h($contacts->user_id) ?></td>
+             <!--   <td><?= h($contacts->user_id) ?></td> -->
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Contacts', 'action' => 'view', $contacts->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Contacts', 'action' => 'edit', $contacts->id]) ?>
@@ -61,20 +64,22 @@
         <?php endif; ?>
     </div>
     <div class="related">
+
+
         <h4><?= __('Related Groups') ?></h4>
         <?php if (!empty($user->groups)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th><?= __('Id') ?></th>
+             <!--   <th><?= __('Id') ?></th> -->
                 <th><?= __('Name') ?></th>
-                <th><?= __('User Id') ?></th>
+             <!--  <th><?= __('User Id') ?></th> -->
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($user->groups as $groups): ?>
             <tr>
-                <td><?= h($groups->id) ?></td>
+             <!--   <td><?= h($groups->id) ?></td> -->
                 <td><?= h($groups->name) ?></td>
-                <td><?= h($groups->user_id) ?></td>
+             <!--   <td><?= h($groups->user_id) ?></td> -->
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Groups', 'action' => 'view', $groups->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Groups', 'action' => 'edit', $groups->id]) ?>
