@@ -88,7 +88,8 @@ class ContactsTable extends Table
 
         $rules->add(function ($entity, $options) {
             // If contact is associated with groups we check the groups
-            if ($entity->has('groups')) {
+
+            if (!$entity->groups == []) {
                 $badGroups = $this->Groups->find()->where([
                     'user_id IS NOT' => $entity->user_id, // group is not owned by user
                     'id IN' => Hash::extract($entity->groups, '{n}.id') // but user wants to associate
