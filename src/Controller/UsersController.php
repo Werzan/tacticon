@@ -10,6 +10,12 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+    public $paginate = [
+        'limit' => 5,
+        'order' => [
+            'Users.name' => 'asc'
+        ]
+    ];
 
     /**
      * Index method
@@ -28,10 +34,6 @@ class UsersController extends AppController
         $authUserId = $this->Auth->user('id');
         $this->set(compact('users', 'authUserId'));
         $this->set('_serialize', ['users']);
-
-        if ($this->request->data('logoutbtn')) {
-            $this->logout();
-        }
     }
 
     /**

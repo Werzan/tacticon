@@ -22,8 +22,13 @@ class ContactsController extends AppController
             'contain' => ['Users'],
             'conditions' => [
                 'Contacts.user_id' => $this->Auth->user('id'),
+            ],
+            'limit' => 5,
+            'order' => [
+                'Contacts.name' => 'asc'
             ]
         ];
+
 
         $query = $this->Contacts->find();
         if ($this->request->data('search')) {

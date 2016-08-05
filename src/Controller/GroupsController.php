@@ -22,8 +22,13 @@ class GroupsController extends AppController
             'contain' => ['Users'],
             'conditions' => [
                 'Groups.user_id' => $this->Auth->user('id')
+            ],
+            'limit' => 5,
+            'order' => [
+                'Groups.name' => 'asc'
             ]
         ];
+
         $groups = $this->paginate($this->Groups);
 
         $this->set(compact('groups'));
