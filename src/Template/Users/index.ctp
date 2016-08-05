@@ -6,6 +6,7 @@
         <li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?></li>
+
     </ul>
 </nav>
 <div class="users index large-9 medium-8 columns content">
@@ -46,14 +47,4 @@
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
-
-
-
-     <?= $this->Form->create(); ?>
-        <?= $this->Form->button(__("Logout")); ?>
-        <form method="post" action="/Users/logout">
-        <input type="hidden" name="logoutbtn" value="logoutvalue" />
-        <?= $this->Form->end(); ?>
-
-
 </div>
