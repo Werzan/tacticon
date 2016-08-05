@@ -28,24 +28,26 @@
         </tr>
     </table>
     <div class="related">
+
+
         <h4><?= __('Related Contacts') ?></h4>
         <?php if (!empty($group->contacts)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th><?= __('Id') ?></th>
+            <!--    <th><?= __('Id') ?></th> -->
                 <th><?= __('Name') ?></th>
                 <th><?= __('Email') ?></th>
                 <th><?= __('Tel') ?></th>
-                <th><?= __('User Id') ?></th>
+            <!--    <th><?= __('User Id') ?></th> -->
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($group->contacts as $contacts): ?>
             <tr>
-                <td><?= h($contacts->id) ?></td>
+            <!--    <td><?= h($contacts->id) ?></td> -->
                 <td><?= h($contacts->name) ?></td>
                 <td><?= h($contacts->email) ?></td>
                 <td><?= h($contacts->tel) ?></td>
-                <td><?= h($contacts->user_id) ?></td>
+            <!--    <td><?= h($contacts->user_id) ?></td> -->
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Contacts', 'action' => 'view', $contacts->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Contacts', 'action' => 'edit', $contacts->id]) ?>
