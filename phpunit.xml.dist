@@ -37,8 +37,8 @@
             <directory suffix=".php">./plugins/*/src/</directory>
         </whitelist>
         <blacklist>
-        <file>../src/Console/Installer.php </file>
-        <file>../src/Shell/ConsoleShell.php </file>
+            <file>./src/Console/Installer.php</file>
+            <file>./src/Shell/ConsoleShell.php </file>
         </blacklist>
     </filter>
 </phpunit>
