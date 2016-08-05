@@ -36,20 +36,22 @@
         </tr>
     </table>
     <div class="related">
+
+
         <h4><?= __('Related Groups') ?></h4>
         <?php if (!empty($contact->groups)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th><?= __('Id') ?></th>
+             <!--   <th><?= __('Id') ?></th> -->
                 <th><?= __('Name') ?></th>
-                <th><?= __('User Id') ?></th>
+             <!--   <th><?= __('User Id') ?></th> -->
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($contact->groups as $groups): ?>
             <tr>
-                <td><?= h($groups->id) ?></td>
+             <!--   <td><?= h($groups->id) ?></td> -->
                 <td><?= h($groups->name) ?></td>
-                <td><?= h($groups->user_id) ?></td>
+             <!--   <td><?= h($groups->user_id) ?></td> -->
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Groups', 'action' => 'view', $groups->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Groups', 'action' => 'edit', $groups->id]) ?>

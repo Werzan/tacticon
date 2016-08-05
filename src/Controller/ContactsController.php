@@ -99,7 +99,7 @@ class ContactsController extends AppController
             'contain' => ['Groups']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $contact = $this->Contacts->patchEntity($contact, $this->request->data, ['associated' => ['Groups' => ['id']]]);
+            $contact = $this->Contacts->patchEntity($contact, $this->request->data);
             if ($this->Contacts->save($contact)) {
                 $this->Flash->success(__('The contact has been saved.'));
 
