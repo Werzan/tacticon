@@ -21,7 +21,7 @@
         <?php
             echo $this->Form->input('name');
             echo $this->Form->input('email');
-            echo $this->Form->input('password');
+            echo $this->Form->input('password', ['value' => '', 'required' => false]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
