@@ -21,7 +21,7 @@ use Psy\Shell as PsyShell;
 
 /**
  * Simple console wrapper around Psy\Shell.
- * 
+ *
  * @codeCoverageIgnore
  */
 class ConsoleShell extends Shell
