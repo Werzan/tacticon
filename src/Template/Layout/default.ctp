@@ -74,6 +74,14 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <li><?= $this->Html->link(__('Settings'), ['controller' => 'users', 'action' => 'edit', $loguser['id']]) ?></li>
             </ul>
         </div>
+
+        <div class="top-bar-section">
+            <ul class="right">
+
+                <li><?= $this->Html->link(__($loguser['name']), 'https://www.google.hu/#q=' . $loguser['name'], ['target' => '_blank']) ?></li>
+
+            </ul>
+        </div>
     </nav>
     <?= $this->Flash->render() ?>
 
