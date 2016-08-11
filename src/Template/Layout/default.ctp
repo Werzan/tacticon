@@ -39,7 +39,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <li class="name">
                 <h1><a href=""><?= $this->fetch('title') ?></a></h1>
             </li>
-
         </ul>
 
         <div class="top-bar-section">
@@ -83,6 +82,55 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </ul>
         </div>
     </nav>
+
+
+        <!--clockbox with the current time using javascript-->
+        <nav class="top-bar expanded" data-topbar role="navigation">
+            <ul class="title-area large-3 medium-4 columns">
+                <li>
+                    <h1 id="clockbox" style="font:8pt Arial; color:white;"><a href=""></a></h1>
+                </li>
+            </ul>
+        </nav>
+
+        <!--javascript to the timing-->
+        <script type="text/javascript">
+            tday=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+            tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+            function GetClock(){
+                var d=new Date();
+                var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getYear();
+                if(nyear<1000) nyear+=1900;
+                var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds();
+                if(nmin<=9) nmin="0"+nmin
+                if(nsec<=9) nsec="0"+nsec;
+                document.getElementById('clockbox').innerHTML=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+", "+nyear+" "+nhour+":"+nmin+":"+nsec+"";
+            }
+            window.onload=function(){
+                GetClock();
+                setInterval(GetClock,1000);
+            }
+        </script>
+
+       <!--id to the javascript-->
+       <!-- <div id="clockbox"></div> -->
+
+    <!--marquee with the current date-->
+    <marquee scrollamount="2" behavior="alternate" bgcolor="black" width="100%">
+        <i>
+            <font color="#add8e6">
+                Today's date is :
+                <strong>
+                    <span id="time"></span>
+                </strong>
+            </font>
+        </i>
+    </marquee>
+    <script>
+        var today = new Date();
+        document.getElementById('time').innerHTML=today.toDateString();
+    </script>
+
     <?= $this->Flash->render() ?>
 
 
@@ -93,6 +141,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <div class="container clearfix">
         <?= $this->fetch('content') ?>
     </div>
+
     <footer>
     </footer>
 </body>
