@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\Time;
 
 /**
  * Users Controller
@@ -30,9 +31,9 @@ class UsersController extends AppController
         }
 
         $users = $this->paginate($query);
-
         $authUserId = $this->Auth->user('id');
-        $this->set(compact('users', 'authUserId'));
+        $time = Time::now();
+        $this->set(compact('users', 'authUserId', 'time'));
         $this->set('_serialize', ['users']);
     }
 
