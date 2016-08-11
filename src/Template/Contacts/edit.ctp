@@ -2,17 +2,14 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
-                __('Delete'),
+                __('Delete Contact'),
                 ['action' => 'delete', $contact->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $contact->id)]
             )
         ?></li>
         <li><?= $this->Html->link(__('List Contacts'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?></li>
-    </ul>
+        <li><?= $this->Html->link(__('New Contact'), ['action' => 'add']) ?> </li>
+
 </nav>
 <div class="contacts form large-9 medium-8 columns content">
     <?= $this->Form->create($contact) ?>
