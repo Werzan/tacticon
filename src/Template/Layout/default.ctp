@@ -39,10 +39,39 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <li class="name">
                 <h1><a href=""><?= $this->fetch('title') ?></a></h1>
             </li>
+
         </ul>
+
+        <div class="top-bar-section">
+            <ul class="name">
+                <li><?= $this->Html->link(__('Users'), ['controller' => 'users', 'action' => 'index']) ?></li>
+            </ul>
+        </div>
+
+        <div class="top-bar-section">
+            <ul class="name">
+                <li><?= $this->Html->link(__('Contacts'), ['controller' => 'contacts', 'action' => 'index']) ?></li>
+            </ul>
+        </div>
+
+        <div class="top-bar-section">
+        <ul class="name">
+            <li><?= $this->Html->link(__('Groups'), ['controller' => 'groups', 'action' => 'index']) ?></li>
+        </ul>
+        </div>
+
         <div class="top-bar-section">
             <ul class="right">
                 <li><?= $this->Html->link(__('Logout'), ['controller' => 'users', 'action' => 'logout']) ?></li>
+            </ul>
+        </div>
+
+        <div class="top-bar-section">
+            <ul class="right">
+                <?php
+                $loguser = $this->request->session()->read('Auth.User');
+                ?>
+                <li><?= $this->Html->link(__('Settings'), ['controller' => 'users', 'action' => 'edit', $loguser['id']]) ?></li>
             </ul>
         </div>
     </nav>
