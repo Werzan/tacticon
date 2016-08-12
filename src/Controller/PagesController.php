@@ -41,7 +41,9 @@ class PagesController extends AppController
 
         $count = count($path);
         if (!$count) {
+            // @codeCoverageIgnoreStart
             return $this->redirect('/');
+            // @codeCoverageIgnoreEnd
         }
         $page = $subpage = null;
 
@@ -49,7 +51,9 @@ class PagesController extends AppController
             $page = $path[0];
         }
         if (!empty($path[1])) {
+            // @codeCoverageIgnoreStart
             $subpage = $path[1];
+            // @codeCoverageIgnoreEnd
         }
         $this->set(compact('page', 'subpage'));
 

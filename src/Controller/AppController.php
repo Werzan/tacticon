@@ -77,7 +77,9 @@ class AppController extends Controller
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
+            // @codeCoverageIgnoreStart
             $this->set('_serialize', true);
+            // @codeCoverageIgnoreEnd
         }
     }
 

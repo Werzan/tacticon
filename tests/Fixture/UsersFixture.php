@@ -27,7 +27,7 @@ class UsersFixture extends TestFixture
             'email' => ['type' => 'unique', 'columns' => ['email'], 'length' => []],
         ],
         '_options' => [
-            'engine' => 'InnoDB',
+            'engine' => 'MEMORY',
             'collation' => 'utf8_general_ci'
         ],
     ];
