@@ -62,7 +62,7 @@ class GroupsControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
 
         $this->get('/groups/view/3');
-        $this->assertResponseCode('302');
+        $this->assertRedirect();
     }
 
     /**
@@ -79,7 +79,7 @@ class GroupsControllerTest extends IntegrationTestCase
             'name' => 'csoportd',
         ];
         $this->post('/groups/add', $data);
-        $this->assertResponseCode('302');
+        $this->assertRedirect();
     }
 
     /**
@@ -97,7 +97,7 @@ class GroupsControllerTest extends IntegrationTestCase
         ];
 
         $this->post('/groups/edit/1', $data);
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
     }
 
     /**
@@ -119,7 +119,7 @@ class GroupsControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         $this->post('/groups/delete/1');
-        $this->assertResponseCode('302');
+        $this->assertRedirect();
 
         $this->post('/groups/delete/4');
         $this->assertResponseCode('404');

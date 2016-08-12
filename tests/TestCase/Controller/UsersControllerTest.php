@@ -82,7 +82,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
 
         $this->get('/users/view/2');
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
     }
 
     /**
@@ -102,7 +102,7 @@ class UsersControllerTest extends IntegrationTestCase
         ];
 
         $this->post('/users/add', $data);
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
     }
 
     /**
@@ -120,17 +120,17 @@ class UsersControllerTest extends IntegrationTestCase
         ];
 
         $this->post('/users/edit/1', $data);
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
 
         $this->get('/users/edit/2');
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
 
         $data = [
             'name' => 'Peti jancsi lett'
         ];
 
         $this->post('/users/edit/2', $data);
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
     }
 
     /**
@@ -152,10 +152,10 @@ class UsersControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         $this->post('/users/delete/1');
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
 
         $this->post('/users/delete/2');
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
     }
 
     public function testSearch()
