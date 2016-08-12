@@ -31,6 +31,7 @@ class GroupsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => '1',
                     'email' => 'peti@gmail.com',
+                    'name' => 'Petike'
                 ]
             ]
         ]);

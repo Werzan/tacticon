@@ -93,7 +93,7 @@ class UsersController extends AppController
         ]);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            if ($this->request->data['password'] === '') {
+            if ($this->request->data('password') === '') {
                 unset($this->request->data['password']);
             }
             $user = $this->Users->patchEntity($user, $this->request->data);

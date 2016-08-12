@@ -29,7 +29,7 @@ class ContactsGroupsFixture extends TestFixture
             'contacts_groups_ibfk_2' => ['type' => 'foreign', 'columns' => ['group_id'], 'references' => ['groups', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
-            'engine' => 'InnoDB',
+            'engine' => 'MEMORY',
             'collation' => 'utf8_general_ci'
         ],
     ];

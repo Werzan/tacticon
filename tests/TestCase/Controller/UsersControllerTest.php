@@ -36,6 +36,7 @@ class UsersControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => '1',
                     'email' => 'peti@gmail.com',
+                    'name' => 'Petike'
                 ]
             ]
         ]);
@@ -53,6 +54,21 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->get('/users/index');
         $this->assertResponseOk();
+    }
+
+    /**
+     * Test index method with Ajax
+     *
+     * @return void
+     */
+    public function testIndexAjax()
+    {
+        // Test json
+        $this->get('/users.json');
+        $this->assertResponseOk();
+        $this->assertHeaderContains('Content-Type', 'application/json');
+        $this->assertContentType('application/json');
+        $this->assertJson($this->_response->body());
     }
 
     /**
@@ -100,7 +116,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
 
         $data = [
-            'name' => 'Peti jancsi lett'
+            'name' => 'Peti jancsi lett',
         ];
 
         $this->post('/users/edit/1', $data);
