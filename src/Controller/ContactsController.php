@@ -128,7 +128,9 @@ class ContactsController extends AppController
         if ($this->Contacts->delete($contact)) {
             $this->Flash->success(__('The contact has been deleted.'));
         } else {
+            // @codeCoverageIgnoreStart
             $this->Flash->error(__('The contact could not be deleted. Please, try again.'));
+            // @codeCoverageIgnoreEnd
         }
 
         return $this->redirect(['action' => 'index']);
@@ -157,7 +159,8 @@ class ContactsController extends AppController
         if ($contact->user_id == $user['id']) {
             return true;
         }
-
+        // @codeCoverageIgnoreStart
         return parent::isAuthorized($user);
+        // @codeCoverageIgnoreEnd
     }
 }

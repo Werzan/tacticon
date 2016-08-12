@@ -102,7 +102,7 @@ class UsersControllerTest extends IntegrationTestCase
         ];
 
         $this->post('/users/add', $data);
-        $this->assertResponseCode('302');
+        $this->assertResponseCode(302);
     }
 
     /**
@@ -145,5 +145,23 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->post('/users/delete/2');
         $this->assertResponseCode(302);
+    }
+
+    public function testSearch()
+    {
+        $this->post('/users', ['search' => 'i']);
+        $this->assertResponseOk();
+        $this->assertResponseContains('Petike');
+        $this->assertResponseContains('Juliska');
+        $this->assertResponseNotContains('Géza');
+
+        $this->post('/users.json', ['search' => 'i']);
+        $this->assertResponseOk();
+        $this->assertHeaderContains('Content-Type', 'application/json');
+        $this->assertContentType('application/json');
+        $this->assertJson($this->_response->body());
+        $this->assertResponseContains('Petike');
+        $this->assertResponseContains('Juliska');
+        $this->assertResponseNotContains('Géza');
     }
 }
