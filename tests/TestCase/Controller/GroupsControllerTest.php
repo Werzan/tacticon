@@ -31,6 +31,7 @@ class GroupsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => '1',
                     'email' => 'peti@gmail.com',
+                    'name' => 'Petike'
                 ]
             ]
         ]);
@@ -61,7 +62,7 @@ class GroupsControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
 
         $this->get('/groups/view/3');
-        $this->assertResponseCode('302');
+        $this->assertRedirect();
     }
 
     /**
@@ -76,10 +77,9 @@ class GroupsControllerTest extends IntegrationTestCase
 
         $data = [
             'name' => 'csoportd',
-            'user_id' => 1,
         ];
         $this->post('/groups/add', $data);
-        $this->assertResponseCode('302');
+        $this->assertRedirect();
     }
 
     /**
@@ -97,7 +97,18 @@ class GroupsControllerTest extends IntegrationTestCase
         ];
 
         $this->post('/groups/edit/1', $data);
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
+    }
+
+    /**
+     * Test edit method without any parameter
+     *
+     * @return void
+     */
+    public function testEditWithoutParams()
+    {
+        $this->get('/groups/edit');
+        $this->assertRedirect();
     }
 
     /**
@@ -108,7 +119,7 @@ class GroupsControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         $this->post('/groups/delete/1');
-        $this->assertResponseCode('302');
+        $this->assertRedirect();
 
         $this->post('/groups/delete/4');
         $this->assertResponseCode('404');

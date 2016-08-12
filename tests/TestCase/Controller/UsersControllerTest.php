@@ -36,6 +36,7 @@ class UsersControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => '1',
                     'email' => 'peti@gmail.com',
+                    'name' => 'Petike'
                 ]
             ]
         ]);
@@ -56,6 +57,21 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
+     * Test index method with Ajax
+     *
+     * @return void
+     */
+    public function testIndexAjax()
+    {
+        // Test json
+        $this->get('/users.json');
+        $this->assertResponseOk();
+        $this->assertHeaderContains('Content-Type', 'application/json');
+        $this->assertContentType('application/json');
+        $this->assertJson($this->_response->body());
+    }
+
+    /**
      * Test view method
      *
      * @return void
@@ -66,7 +82,7 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
 
         $this->get('/users/view/2');
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
     }
 
     /**
@@ -86,7 +102,7 @@ class UsersControllerTest extends IntegrationTestCase
         ];
 
         $this->post('/users/add', $data);
-        $this->assertResponseCode('302');
+        $this->assertRedirect();
     }
 
     /**
@@ -100,21 +116,32 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
 
         $data = [
-            'name' => 'Peti jancsi lett'
+            'name' => 'Peti jancsi lett',
         ];
 
         $this->post('/users/edit/1', $data);
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
 
         $this->get('/users/edit/2');
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
 
         $data = [
             'name' => 'Peti jancsi lett'
         ];
 
         $this->post('/users/edit/2', $data);
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
+    }
+
+    /**
+     * Test edit method without any parameter
+     *
+     * @return void
+     */
+    public function testEditWithoutParams()
+    {
+        $this->get('/users/edit');
+        $this->assertRedirect();
     }
 
     /**
@@ -125,9 +152,27 @@ class UsersControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         $this->post('/users/delete/1');
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
 
         $this->post('/users/delete/2');
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
+    }
+
+    public function testSearch()
+    {
+        $this->post('/users', ['search' => 'i']);
+        $this->assertResponseOk();
+        $this->assertResponseContains('Petike');
+        $this->assertResponseContains('Juliska');
+        $this->assertResponseNotContains('Géza');
+
+        $this->post('/users.json', ['search' => 'i']);
+        $this->assertResponseOk();
+        $this->assertHeaderContains('Content-Type', 'application/json');
+        $this->assertContentType('application/json');
+        $this->assertJson($this->_response->body());
+        $this->assertResponseContains('Petike');
+        $this->assertResponseContains('Juliska');
+        $this->assertResponseNotContains('Géza');
     }
 }

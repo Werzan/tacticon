@@ -36,6 +36,7 @@ class ContactsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => '1',
                     'email' => 'peti@gmail.com',
+                    'name' => 'Petike'
                 ]
             ]
         ]);
@@ -82,10 +83,25 @@ class ContactsControllerTest extends IntegrationTestCase
         $data = [
             'name' => 'Petikeaddoltspanja',
             'email' => 'addoltspan@gmail.com',
+            'tel' => '',
         ];
 
         $this->post('/contacts/add', $data);
-        $this->assertResponseCode('302');
+        $this->assertRedirect();
+    }
+
+    /**
+     * Test Adding a contact with bad data
+     *
+     * @return void
+     */
+    public function testAddWithBadData()
+    {
+        $this->post('/contacts/add', [
+            'email' => 'aaa'
+        ]);
+
+        $this->assertResponseContains("could not be saved");
     }
 
     /**
@@ -99,10 +115,35 @@ class ContactsControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
 
         $data = [
-            'name' => 'Módosított Benjamin'
+            'name' => 'Módosított Benjamin',
         ];
         $this->post('/contacts/edit/1', $data);
-        $this->assertResponseCode('302');
+        $this->assertRedirect();
+    }
+
+    /**
+     * Test Editing with bad data
+     *
+     * @return void
+     */
+    public function testEditWithBadData()
+    {
+        $this->post('/contacts/edit/1', [
+            'email' => 'aaa'
+        ]);
+
+        $this->assertResponseContains("could not be saved");
+    }
+
+    /**
+     * Test Editing Contact without params
+     *
+     * @return void
+     */
+    public function testEditWithoutParams()
+    {
+        $this->get('/contacts/edit');
+        $this->assertRedirect();
     }
 
     /**
@@ -113,9 +154,22 @@ class ContactsControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         $this->post('/contacts/delete/1');
-        $this->assertResponseCode(302);
+        $this->assertRedirect();
+    }
 
-        $this->post('/contacts/delete/2');
-        $this->assertResponseCode(302);
+    public function testSearch()
+    {
+        $this->post('/contacts', ['search' => 'Béla']);
+        $this->assertResponseOk();
+        $this->assertResponseContains('Kiss');
+        $this->assertResponseNotContains('Lakatos');
+
+        $this->post('/contacts.json', ['search' => 'Béla']);
+        $this->assertResponseOk();
+        $this->assertHeaderContains('Content-Type', 'application/json');
+        $this->assertContentType('application/json');
+        $this->assertJson($this->_response->body());
+        $this->assertResponseContains('Kiss');
+        $this->assertResponseNotContains('Lakatos');
     }
 }

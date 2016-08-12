@@ -28,7 +28,7 @@ class GroupsFixture extends TestFixture
             'groups_ibfk_1' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
-            'engine' => 'InnoDB',
+            'engine' => 'MEMORY',
             'collation' => 'utf8_general_ci'
         ],
     ];
