@@ -77,7 +77,6 @@ class GroupsControllerTest extends IntegrationTestCase
 
         $data = [
             'name' => 'csoportd',
-            'user_id' => 1,
         ];
         $this->post('/groups/add', $data);
         $this->assertResponseCode('302');
@@ -99,6 +98,17 @@ class GroupsControllerTest extends IntegrationTestCase
 
         $this->post('/groups/edit/1', $data);
         $this->assertResponseCode(302);
+    }
+
+    /**
+     * Test edit method without any parameter
+     *
+     * @return void
+     */
+    public function testEditWithoutParams()
+    {
+        $this->get('/groups/edit');
+        $this->assertRedirect();
     }
 
     /**

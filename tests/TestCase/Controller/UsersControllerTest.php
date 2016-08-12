@@ -134,6 +134,17 @@ class UsersControllerTest extends IntegrationTestCase
     }
 
     /**
+     * Test edit method without any parameter
+     *
+     * @return void
+     */
+    public function testEditWithoutParams()
+    {
+        $this->get('/users/edit');
+        $this->assertRedirect();
+    }
+
+    /**
      * Test delete method
      *
      * @return void
