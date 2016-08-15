@@ -60,6 +60,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </div>
 
         <div class="top-bar-section">
+            <ul class="name">
+                <li><?= $this->Html->link(__('E-mail'), ['controller' => 'contacts', 'action' => 'email']) ?></li>
+            </ul>
+        </div>
+
+        <div class="top-bar-section">
             <ul class="right">
                 <li><?= $this->Html->link(__('Logout'), ['controller' => 'users', 'action' => 'logout']) ?></li>
             </ul>
