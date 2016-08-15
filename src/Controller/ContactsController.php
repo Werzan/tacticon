@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Exception\Exception;
+use Cake\Mailer\Email;
 
 /**
  * Contacts Controller
@@ -137,6 +139,38 @@ class ContactsController extends AppController
     }
 
     /**
+     * Sends an e-mail to a selected contact
+     *
+     * @param null|int $id id of the contact to send mail to
+     * @return \Cake\Network\Response|null
+     */
+    public function email($id = null)
+    {
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $contact = $this->Contacts->get($this->request->data('id'));
+            try {
+                $email = new Email();
+                $email
+                    ->to($contact->email)
+                    ->from($this->Auth->user('email'))
+                    ->subject($this->request->data('Subject'))
+                    ->send($this->request->data('Body'));
+                $this->Flash->success(__('The e-mail has been sent.'));
+
+                return $this->redirect(['action' => 'index']);
+            } catch (\Exception $e) {
+                $this->Flash->error("Message could not be sent, please try again later...");
+            }
+        }
+        $contacts = $this->Contacts->find('list', ['limit' => 200])
+            ->where(['Contacts.user_id' => $this->Auth->user('id')])
+            ->where(['Contacts.email IS NOT' => null]);
+        $this->set('id', $id);
+        $this->set(compact('contacts', 'users'));
+        $this->set('_serialize', ['contacts']);
+    }
+
+    /**
      * @param array $user logged in user
      * @return bool user is authorized or not
      */
@@ -145,7 +179,7 @@ class ContactsController extends AppController
         $action = $this->request->params['action'];
 
         // The add and index actions are always allowed.
-        if (in_array($action, ['index', 'add'])) {
+        if (in_array($action, ['index', 'add', 'email'])) {
             return true;
         }
         // All other actions require an id.
