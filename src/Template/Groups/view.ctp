@@ -23,10 +23,12 @@
             <th><?= __('Id') ?></th>
             <td><?= $this->Number->format($group->id) ?></td>
         </tr>
+        <tr>
+            <th><?= __('Company Id') ?></th>
+            <td><?= $this->Number->format($group->company_id) ?></td>
+        </tr>
     </table>
     <div class="related">
-
-
         <h4><?= __('Related Contacts') ?></h4>
         <?php if (!empty($group->contacts)): ?>
         <table cellpadding="0" cellspacing="0">

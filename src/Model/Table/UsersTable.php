@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\HasMany $Contacts
  * @property \Cake\ORM\Association\HasMany $Groups
+ * @property \Cake\ORM\Association\BelongsToMany $Companies
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -42,6 +43,11 @@ class UsersTable extends Table
         ]);
         $this->hasMany('Groups', [
             'foreignKey' => 'user_id'
+        ]);
+        $this->belongsToMany('Companies', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'company_id',
+            'joinTable' => 'companies_users'
         ]);
     }
 

@@ -28,7 +28,6 @@ class GroupsController extends AppController
                 'Groups.name' => 'asc'
             ]
         ];
-
         $groups = $this->paginate($this->Groups);
 
         $this->set(compact('groups'));
@@ -91,7 +90,6 @@ class GroupsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $group = $this->Groups->patchEntity($group, $this->request->data);
-
             if ($this->Groups->save($group)) {
                 $this->Flash->success(__('The group has been saved.'));
 

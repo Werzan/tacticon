@@ -19,6 +19,8 @@ class UsersControllerTest extends IntegrationTestCase
         'app.users',
         'app.contacts',
         'app.groups',
+        'app.companies',
+        'app.companies_users',
         'app.contacts_groups'
     ];
 

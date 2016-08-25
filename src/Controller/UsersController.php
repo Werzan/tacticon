@@ -47,7 +47,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Contacts', 'Groups']
+            'contain' => ['Companies', 'Contacts', 'Groups']
         ]);
 
         $this->set('user', $user);
@@ -72,10 +72,8 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-
-
-        // $authUser = $this->Auth->user();
-        $this->set(compact('user'));
+        $companies = $this->Users->Companies->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'companies'));
         $this->set('_serialize', ['user']);
     }
 
@@ -89,9 +87,8 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['Companies']
         ]);
-
         if ($this->request->is(['patch', 'post', 'put'])) {
             if ($this->request->data('password') === '') {
                 unset($this->request->data['password']);
@@ -105,8 +102,8 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-
-        $this->set(compact('user'));
+        $companies = $this->Users->Companies->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'companies'));
         $this->set('_serialize', ['user']);
     }
 

@@ -26,9 +26,6 @@
         </tr>
     </table>
     <div class="related">
-
-
-
         <h4><?= __('Related Contacts') ?></h4>
         <?php if (!empty($user->contacts)): ?>
         <table cellpadding="0" cellspacing="0">
@@ -58,8 +55,6 @@
         <?php endif; ?>
     </div>
     <div class="related">
-
-
         <h4><?= __('Related Groups') ?></h4>
         <?php if (!empty($user->groups)): ?>
         <table cellpadding="0" cellspacing="0">
@@ -78,6 +73,29 @@
                     <?= $this->Html->link(__('View'), ['controller' => 'Groups', 'action' => 'view', $groups->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Groups', 'action' => 'edit', $groups->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'Groups', 'action' => 'delete', $groups->id], ['confirm' => __('Are you sure you want to delete # {0}?', $groups->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
+    <div class="related">
+        <h4><?= __('Related Companies') ?></h4>
+        <?php if (!empty($user->companies)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th><?= __('Id') ?></th>
+                <th><?= __('Name') ?></th>
+                <th class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($user->companies as $companies): ?>
+            <tr>
+                <td><?= h($companies->id) ?></td>
+                <td><?= h($companies->name) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'Companies', 'action' => 'view', $companies->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Companies', 'action' => 'edit', $companies->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Companies', 'action' => 'delete', $companies->id], ['confirm' => __('Are you sure you want to delete # {0}?', $companies->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

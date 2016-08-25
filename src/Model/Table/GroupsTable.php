@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  * Groups Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \Cake\ORM\Association\BelongsTo $Companies
  * @property \Cake\ORM\Association\BelongsToMany $Contacts
  *
  * @method \App\Model\Entity\Group get($primaryKey, $options = [])
@@ -41,6 +42,9 @@ class GroupsTable extends Table
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Companies', [
+            'foreignKey' => 'company_id'
         ]);
         $this->belongsToMany('Contacts', [
             'foreignKey' => 'group_id',
